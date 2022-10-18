@@ -11,22 +11,23 @@ public class EmployeesService {
 
     private EmployeesRepository repository;
 
+    private EmployeesMapper employeesMapper;
+
     public EmployeeDto createEmployee(CreateEmployeeCommand command) {
         var employee = new Employee(command.getName());
         repository.save(employee);
-        return new EmployeeDto(employee.getId(), employee.getName());
+        return employeesMapper.toDto(employee);
     }
 
     public EmployeeDto findEmployeeById(long id) {
         var employee = repository
                 .findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
-        return new EmployeeDto(employee.getId(), employee.getName());
+        return employeesMapper.toDto(employee);
     }
 
     public List<EmployeeDto> listEmployees() {
-        return repository.findAll()
-                .stream().map(e -> new EmployeeDto(e.getId(), e.getName())).toList();
+        return employeesMapper.toDto(repository.findAll());
     }
 
 }

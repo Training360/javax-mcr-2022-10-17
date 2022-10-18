@@ -15,7 +15,7 @@ import java.util.UUID;
 public class EmployeesExceptionHandler implements ProblemHandling {
 
     @ExceptionHandler
-    ResponseEntity<Problem> handleException(EmployeeNotFoundException exception, NativeWebRequest request) {
+    public ResponseEntity<Problem> handleException(EmployeeNotFoundException exception, NativeWebRequest request) {
         Problem problem =
                 Problem.builder()
                         .withType(URI.create("employees/employee-not-found"))
