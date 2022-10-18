@@ -9,6 +9,7 @@ import org.zalando.problem.Status;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 
 import java.net.URI;
+import java.util.UUID;
 
 @ControllerAdvice
 public class EmployeesExceptionHandler implements ProblemHandling {
@@ -21,6 +22,8 @@ public class EmployeesExceptionHandler implements ProblemHandling {
                         .withTitle("Not found")
                         .withStatus(Status.NOT_FOUND)
                         .withDetail(exception.getMessage())
+                        .with("employeeId", exception.getEmployeeId())
+                        .with("exceptionId", UUID.randomUUID().toString())
                         .build();
         return this.create(exception, problem, request);
 

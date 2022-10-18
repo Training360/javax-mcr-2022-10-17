@@ -20,7 +20,7 @@ public class EmployeesService {
     public EmployeeDto findEmployeeById(long id) {
         var employee = repository
                 .findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
         return new EmployeeDto(employee.getId(), employee.getName());
     }
 
