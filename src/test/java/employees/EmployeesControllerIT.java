@@ -25,7 +25,7 @@ class EmployeesControllerIT {
 //                        """)
                 .bodyValue(new CreateEmployeeCommand("John Doe"))
                 .exchange()
-                .expectStatus().isOk()
+                .expectStatus().isCreated()
 //                .expectBody().jsonPath(".['name']", "John Doe");
                 .expectBody(EmployeeDto.class).value(e -> assertEquals("John Doe", e.getName()));
 

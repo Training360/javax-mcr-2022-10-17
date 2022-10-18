@@ -1,7 +1,10 @@
 package employees;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,8 +22,12 @@ public class EmployeesController {
     }
 
     @PostMapping
-    public EmployeeDto createEmployee(@Valid @RequestBody CreateEmployeeCommand command) {
-        return employeesService.createEmployee(command);
+    public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody CreateEmployeeCommand command,
+                                                      UriComponentsBuilder uri) {
+        var employee = employeesService.createEmployee(command);
+        return ResponseEntity
+                .created(uri.path("/api/employees/{id}").buildAndExpand(employee.getId()).toUri())
+                .body(employee);
     }
 
 }
