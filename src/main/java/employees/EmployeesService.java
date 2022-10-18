@@ -1,29 +1,25 @@
 package employees;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
+@AllArgsConstructor
 public class EmployeesService {
 
-    private final List<Employee> employees = Collections.synchronizedList(new ArrayList<>());
-
-    private AtomicLong idGenerator = new AtomicLong();
+    private EmployeesRepository repository;
 
     public EmployeeDto createEmployee(CreateEmployeeCommand command) {
-        var employee = new Employee(idGenerator.incrementAndGet(), command.getName());
-        employees.add(employee);
+        var employee = new Employee(command.getName());
+        repository.save(employee);
         return new EmployeeDto(employee.getId(), employee.getName());
     }
 
     public List<EmployeeDto> listEmployees() {
-        return employees
-                .stream().map(e -> new EmployeeDto(e.getId(), e.getName()))
-                .toList();
+        return repository.findAll()
+                .stream().map(e -> new EmployeeDto(e.getId(), e.getName())).toList();
     }
 
 }
