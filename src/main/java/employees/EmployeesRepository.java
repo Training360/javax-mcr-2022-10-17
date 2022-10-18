@@ -13,4 +13,6 @@ public interface EmployeesRepository extends JpaRepository<Employee, Long> {
 
     @Query("select new employees.EmployeeDto(e.id, e.name) from Employee e")
     List<EmployeeDto> findAllDto();
+
+    Optional<Employee> findEmployeeByNameIgnoreCase(String name);
 }

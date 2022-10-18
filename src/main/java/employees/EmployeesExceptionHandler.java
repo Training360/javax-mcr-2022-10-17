@@ -28,4 +28,19 @@ public class EmployeesExceptionHandler implements ProblemHandling {
         return this.create(exception, problem, request);
 
     }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleException(EmployeeAlreadyExistsException exception, NativeWebRequest request) {
+        Problem problem =
+                Problem.builder()
+                        .withType(URI.create("employees/employee-already-exists"))
+                        .withTitle("Already exists")
+                        .withStatus(Status.BAD_REQUEST)
+                        .withDetail(exception.getMessage())
+                        .with("employeeName", exception.getName())
+                        .with("exceptionId", UUID.randomUUID().toString())
+                        .build();
+        return this.create(exception, problem, request);
+
+    }
 }

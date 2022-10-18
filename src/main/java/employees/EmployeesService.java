@@ -14,6 +14,10 @@ public class EmployeesService {
     private EmployeesMapper employeesMapper;
 
     public EmployeeDto createEmployee(CreateEmployeeCommand command) {
+        if (repository.findEmployeeByNameIgnoreCase(command.getName()).isPresent()) {
+            throw new EmployeeAlreadyExistsException(command.getName());
+        }
+
         var employee = new Employee(command.getName());
         repository.save(employee);
         return employeesMapper.toDto(employee);
