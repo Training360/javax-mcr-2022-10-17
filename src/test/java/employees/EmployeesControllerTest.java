@@ -29,7 +29,7 @@ class EmployeesControllerTest {
         // When - act
         var employee = controller.createEmployee(new CreateEmployeeCommand("John Doe"));
 
-        // Than - assert
+        // Then - assert
         verify(service)
                 .createEmployee(argThat(c -> c.getName().equals("John Doe")));
         assertEquals("John Doe", employee.getName());
