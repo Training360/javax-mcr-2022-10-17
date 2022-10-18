@@ -20,14 +20,11 @@ public class EmployeesService {
     }
 
     public EmployeeDto findEmployeeById(long id) {
-        var employee = repository
-                .findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(id));
-        return employeesMapper.toDto(employee);
+        return repository.findDtoById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
     public List<EmployeeDto> listEmployees() {
-        return employeesMapper.toDto(repository.findAll());
+        return repository.findAllDto();
     }
 
 }
