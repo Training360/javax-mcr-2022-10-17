@@ -21,6 +21,11 @@ public class EmployeesController {
         return employeesService.listEmployees();
     }
 
+    @GetMapping("/{id}")
+    public EmployeeDto findEmployeeById(@PathVariable long id) {
+        return employeesService.findEmployeeById(id);
+    }
+
     @PostMapping
     public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody CreateEmployeeCommand command,
                                                       UriComponentsBuilder uri) {
