@@ -8,3 +8,16 @@ Content-Type: application/json
 {
     "name": "John Doe"
 }
+
+### Naplózás
+
+GET http://localhost:8080/actuator/loggers/employees
+
+### Módosítás
+
+POST http://localhost:8080/actuator/loggers/employees
+Content-Type: application/json
+
+{
+    "configuredLevel": "debug"
+}

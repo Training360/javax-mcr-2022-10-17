@@ -2,6 +2,9 @@ package employees;
 
 import auditing.AuditService;
 import employees.addressesgateway.AddressesGateway;
+import employees.eventsgateway.EventsGateway;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,10 +15,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeesServiceTest {
@@ -29,11 +30,18 @@ class EmployeesServiceTest {
     @Mock
     AddressesGateway addressesGateway;
 
+    @Mock
+    EventsGateway eventsGateway;
+
+    @Mock
+    MeterRegistry meterRegistry;
+
     EmployeesService employeesService;
 
     @BeforeEach
     void init() {
-        employeesService = new EmployeesService(employeesRepository, new EmployeesMapperImpl(), auditService, addressesGateway);
+        when(meterRegistry.counter(anyString())).thenReturn(mock(Counter.class));
+        employeesService = new EmployeesService(employeesRepository, new EmployeesMapperImpl(), auditService, addressesGateway, eventsGateway, meterRegistry);
     }
 
     @Test

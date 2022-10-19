@@ -1,6 +1,7 @@
 package employees;
 
 import employees.addressesgateway.AddressesGateway;
+import employees.eventsgateway.EventsGateway;
 import lombok.extern.slf4j.Slf4j;
 //import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,9 @@ class EmployeesControllerIT {
 
     @MockBean
     AddressesGateway addressesGateway;
+
+    @MockBean
+    EventsGateway eventsGateway;
 
     @Test
     //@RepeatedTest(2)
