@@ -2,6 +2,7 @@ package employees;
 
 import auditing.AuditService;
 import employees.addressesgateway.AddressesGateway;
+import employees.eventsgateway.EventsGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class EmployeesService {
 
     private AddressesGateway addressesGateway;
 
+    private EventsGateway eventsGateway;
+
     public EmployeeDto createEmployee(CreateEmployeeCommand command) {
         auditService.audit(command);
 
@@ -28,6 +31,9 @@ public class EmployeesService {
 
         var employee = new Employee(command.getName());
         repository.save(employee);
+
+        eventsGateway.sendMessage("Employee has been created with name: " + command.getName());
+
         return employeesMapper.toDto(employee);
     }
 
