@@ -33,12 +33,9 @@ public class EmployeesService {
 
     public EmployeeDetailsDto findEmployeeById(long id) {
         var employee = repository.findDtoById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        var address = addressesGateway.getAddressForEmployee(employee.getName());
 
-        var details = employeesMapper.toDto(employee);
-        var address = employeesMapper.toDto(addressesGateway.getAddressForEmployee(employee.getName()));
-        details.setAddress(address);
-
-        return details;
+        return employeesMapper.toDto(employee, address);
     }
 
     public List<EmployeeDto> listEmployees() {

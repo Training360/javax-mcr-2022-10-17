@@ -2,6 +2,7 @@ package employees;
 
 import employees.addressesgateway.Address;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.List;
@@ -15,5 +16,6 @@ public interface EmployeesMapper {
 
     AddressDto toDto(Address address);
 
-    EmployeeDetailsDto toDto(EmployeeDto employeeDto);
+    @Mapping(target = "address", source = "address")
+    EmployeeDetailsDto toDto(EmployeeDto employeeDto, Address address);
 }
