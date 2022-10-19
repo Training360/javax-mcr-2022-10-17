@@ -1,5 +1,6 @@
 package employees;
 
+import auditing.AuditService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,11 +22,14 @@ class EmployeesServiceTest {
     @Mock
     EmployeesRepository employeesRepository;
 
+    @Mock
+    AuditService auditService;
+
     EmployeesService employeesService;
 
     @BeforeEach
     void init() {
-        employeesService = new EmployeesService(employeesRepository, new EmployeesMapperImpl());
+        employeesService = new EmployeesService(employeesRepository, new EmployeesMapperImpl(), auditService);
     }
 
     @Test
