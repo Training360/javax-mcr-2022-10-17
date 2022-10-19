@@ -1,6 +1,7 @@
 package employees;
 
 import auditing.AuditService;
+import employees.addressesgateway.AddressesGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,11 +26,14 @@ class EmployeesServiceTest {
     @Mock
     AuditService auditService;
 
+    @Mock
+    AddressesGateway addressesGateway;
+
     EmployeesService employeesService;
 
     @BeforeEach
     void init() {
-        employeesService = new EmployeesService(employeesRepository, new EmployeesMapperImpl(), auditService);
+        employeesService = new EmployeesService(employeesRepository, new EmployeesMapperImpl(), auditService, addressesGateway);
     }
 
     @Test

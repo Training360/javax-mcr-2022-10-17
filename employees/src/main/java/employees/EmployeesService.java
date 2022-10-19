@@ -1,6 +1,7 @@
 package employees;
 
 import auditing.AuditService;
+import employees.addressesgateway.AddressesGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ public class EmployeesService {
 
     private AuditService auditService;
 
+    private AddressesGateway addressesGateway;
+
     public EmployeeDto createEmployee(CreateEmployeeCommand command) {
         auditService.audit(command);
 
@@ -28,8 +31,14 @@ public class EmployeesService {
         return employeesMapper.toDto(employee);
     }
 
-    public EmployeeDto findEmployeeById(long id) {
-        return repository.findDtoById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+    public EmployeeDetailsDto findEmployeeById(long id) {
+        var employee = repository.findDtoById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+
+        var details = employeesMapper.toDto(employee);
+        var address = employeesMapper.toDto(addressesGateway.getAddressForEmployee(employee.getName()));
+        details.setAddress(address);
+
+        return details;
     }
 
     public List<EmployeeDto> listEmployees() {

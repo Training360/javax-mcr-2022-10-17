@@ -1,5 +1,6 @@
 package employees;
 
+import employees.addressesgateway.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
@@ -11,4 +12,8 @@ public interface EmployeesMapper {
     EmployeeDto toDto(Employee employee);
 
     List<EmployeeDto> toDto(List<Employee> employees);
+
+    AddressDto toDto(Address address);
+
+    EmployeeDetailsDto toDto(EmployeeDto employeeDto);
 }
