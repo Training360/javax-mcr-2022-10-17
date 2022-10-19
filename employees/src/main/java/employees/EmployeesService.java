@@ -1,5 +1,6 @@
 package employees;
 
+import auditing.AuditService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,11 @@ public class EmployeesService {
 
     private EmployeesMapper employeesMapper;
 
+    private AuditService auditService;
+
     public EmployeeDto createEmployee(CreateEmployeeCommand command) {
+        auditService.audit(command);
+
         if (repository.findEmployeeByNameIgnoreCase(command.getName()).isPresent()) {
             throw new EmployeeAlreadyExistsException(command.getName());
         }
