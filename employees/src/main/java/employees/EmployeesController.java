@@ -16,6 +16,8 @@ public class EmployeesController {
 
     private EmployeesService employeesService;
 
+    private ApplicationUris applicationUris;
+
     @GetMapping
     public List<EmployeeDto> listEmployees() {
         return employeesService.listEmployees();
@@ -31,7 +33,7 @@ public class EmployeesController {
                                                       UriComponentsBuilder uri) {
         var employee = employeesService.createEmployee(command);
         return ResponseEntity
-                .created(uri.path("/api/employees/{id}").buildAndExpand(employee.getId()).toUri())
+                .created(applicationUris.getUriForEmployee(uri, employee.getId()))
                 .body(employee);
     }
 

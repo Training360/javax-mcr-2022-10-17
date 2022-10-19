@@ -19,7 +19,7 @@ class EmployeesControllerTest {
     EmployeesService service;
 
     @Mock
-    UriComponentsBuilder builder;
+    ApplicationUris applicationUris;
 
     @InjectMocks
     EmployeesController controller;
@@ -30,11 +30,7 @@ class EmployeesControllerTest {
         when(service.createEmployee(any())).thenReturn(new EmployeeDto(1L, "John Doe"));
 
         // When - act
-        UriComponents components = mock(UriComponents.class);
-        when(builder.path(any())).thenReturn(builder);
-        when(builder.buildAndExpand(anyLong())).thenReturn(components);
-
-        var employee = controller.createEmployee(new CreateEmployeeCommand("John Doe"), builder
+        var employee = controller.createEmployee(new CreateEmployeeCommand("John Doe"), null
                 ).getBody();
 
         // Then - assert
