@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: artemis
+  name: artemis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artemis
+  template:
+    metadata:
+      labels:
+        app: artemis
+    spec:
+      containers:
+      - image: training360/eventstore-mq
+        name: artemis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: artemis
+  name: artemis
+spec:
+  ports:
+  - name: 61616-61616
+    port: 61616
+    protocol: TCP
+    targetPort: 61616
+  - name: 8161-8161
+    port: 8161
+    protocol: TCP
+    targetPort: 8161
+  selector:
+    app: artemis
+  type: ClusterIP
