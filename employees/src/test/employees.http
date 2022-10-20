@@ -1,12 +1,16 @@
 ### List all employees
 GET http://localhost:8080/api/employees
 
+### Get employee
+GET http://localhost:8080/api/employees/1
+
+
 ### Create employee
 POST http://localhost:8080/api/employees
 Content-Type: application/json
 
 {
-    "name": "John Doe 105"
+    "name": "John Doe 106"
 }
 
 ### Naplózás

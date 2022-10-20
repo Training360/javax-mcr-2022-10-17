@@ -40,12 +40,13 @@ class EmployeesServiceTest {
 
     @BeforeEach
     void init() {
-        when(meterRegistry.counter(anyString())).thenReturn(mock(Counter.class));
+
         employeesService = new EmployeesService(employeesRepository, new EmployeesMapperImpl(), auditService, addressesGateway, eventsGateway, meterRegistry);
     }
 
     @Test
     void testSave() {
+        when(meterRegistry.counter(anyString())).thenReturn(mock(Counter.class));
         employeesService.createEmployee(new CreateEmployeeCommand("John Doe"));
 
         verify(employeesRepository).save(argThat(e -> e.getName().equals("John Doe")));
